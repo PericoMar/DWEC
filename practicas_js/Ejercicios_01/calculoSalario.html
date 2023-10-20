@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="/my-handling-form-page" method="post">
+        <ul>
+            <li>
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="user_name" />
+            </li>
+            <li>
+                <label for="surname">Apellidos:</label>
+                <input type="text" id="surname" name="user_mail" />
+            </li>
+            <li>
+                <label for="salario">Salario:</label>
+                <textarea id="salary" name="user_message"></textarea>
+            </li>
+            <li>
+                <label for="edad">Edad:</label>
+                <textarea id="age" name="user_message"></textarea>
+            </li>
+        </ul>
+        <button type="submit" id="enviar">Enviar</button>
+    </form>
+    <div id="update">
+        <h1 id="salaryUpdate"></h1>
+        <p id="nombre"></p>
+        <p id="apellidos"></p>
+        <p id="salario"></p>
+        <p id="edad"></p>
+    </div>
+    <script src="js/calculoSalario.js"></script>
+</body>
+
+</html>
