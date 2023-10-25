@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let regex = /(aaa)/gi
+        let ejemploCadena = "ayudaaa"
+        let ejemplo2 =  'probaaando laaas regex en JAAAvaaAscript'
+        console.log(regex.test("ayudaaa"))  
+        let array = [1,2,3,34,5]
+        //Convertir todos los elementos en otros
+        array = array.map((num)=>{
+            return num*2
+        })
+        console.log(array)
+        //Filtrado con funcion
+        arrayFilter = [1,2,3,4,5,6,7,8]
+        console.log(arrayFilter.filter((num)=>{
+            return num%2==0
+        }))
+    </script>
+</body>
+</html>
