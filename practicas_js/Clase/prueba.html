@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="json-info">
+        <!-- Aquí se agregará la información JSON -->
+    </div>
+    <script>
+        const xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://valorant-api.com/v1/gamemodes", true);
+        xhr.send();
+
+        xhr.onload = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                const response = JSON.parse(this.responseText);
+                // Formatear y mostrar la respuesta en la consola con una sangría de 2 espacios
+                const jsonContainer = document.getElementById("json-info");
+
+                // Función para agregar información JSON de manera bonita
+                function displayJsonInfo(obj, parentElement) {
+                    const ul = document.createElement("ul");
+                    for (const key in obj) {
+                        const li = document.createElement("li");
+                        li.textContent = `${key}: `;
+                        if (typeof obj[key] === "object") {
+                            // Si es un objeto, llamamos recursivamente a la función
+                            displayJsonInfo(obj[key], li);
+                        } else {
+                            // Si es un valor, lo mostramos como texto
+                            li.textContent += obj[key];
+                        }
+                        ul.appendChild(li);
+                    }
+                    parentElement.appendChild(ul);
+                }
+                displayJsonInfo(response, jsonContainer);
+            }
+        };
+    </script>
+</body>
+
+</html>
