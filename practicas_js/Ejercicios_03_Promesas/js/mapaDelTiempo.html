@@ -1,13 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #mapa {
+            margin-left: 500px;
+        }
+    </style>
 </head>
+
 <body>
+    <form>
+        <input id="apiKey">
+        <button id="send">Enviar</button>
+    </form>
+    <img style="transform:rotate(90deg)" id="mapa">
+    <h1 id="error"></h1>
+
+
+
     <script>
+        const mapa = document.getElementById('mapa');
+        const btn = document.getElementById('send')
+        btn.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            const input = document.getElementById('apiKey');
+            const apiKey = input.value;
+            console.log(apiKey)
+            fetch(`https://opendata.aemet.es/opendata/api/mapasygraficos/analisis?api_key=${apiKey}`)
+                .then(response => {
+                    return response.json()
+                })
+                .then(response => {
+                    console.log(response.datos);
+                    mapa.src = response.datos;
+                })
+                .catch(error => {
+                    document.getElementById("error").innerHTML = error;
+                })
+        })
         
+
     </script>
 </body>
+
 </html>
