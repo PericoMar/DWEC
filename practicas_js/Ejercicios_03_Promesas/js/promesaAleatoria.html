@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+//         Plantear una promesa que dependa del valor que arroje una función que genera números entre cero y
+// diez. Cuando el número sea menor o igual 5 la promesa debe ser resuelta pasados 3 segundos, caso
+// contrario debe ser rechazada igualmente transcurridos tres segundos. Independientemente del
+// resultado de la promesa mostrar el mensaje "Promesa acabada" para indicar que el proceso terminó
+// Escribe el código correspondiente. Puedes presentar el resultado por consola o con la función alert().
+// Por supuesto también puedes hacerlo manipulando el DOM y presentando los resultado en un
+// documento HTML
+
+        function getRandomInt(max){
+            return Math.floor(Math.random() * (max+1));
+        }
+        const promesaRandom = new Promise((resolve,reject)=>{
+            if(getRandomInt(10)<=5){
+                setTimeout(()=>{
+                    resolve("Promesa resuelta");
+                },3000);
+            }else{
+                setTimeout(()=>{
+                    reject("Promesa rechazada");
+                },3000);
+            }
+        });
+
+        promesaRandom
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(()=>{
+            console.log("Promesa acabada")
+        })
+    </script>
+</body>
+</html>

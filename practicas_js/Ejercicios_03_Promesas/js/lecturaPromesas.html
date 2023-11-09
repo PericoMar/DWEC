@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // // Fragmento 1
+        // console.log("Empezamos...");
+        // const promise1 = new Promise((resolve, reject) => {
+        //     console.log("Orden 1");
+        // })
+        // console.log("Se acabó!!");
+
+        /* Empezamos...
+         Orden 1
+         Se acabó!! 
+         Porque no hay funcion callback, no hay ni resolve, ni reject.*/
+
+        // // Fragmento 2
+        // console.log("Empezamos...");
+        // const promise1 = new Promise((resolve, reject) => {
+        //     console.log("Orden uno")
+        //     resolve("Orden dos")
+        // })
+        // promise1.then(respuesta => {
+        //     console.log(respuesta)
+        // })
+        // console.log("Se acabó!!");
+
+        /* Empezamos...
+         Orden uno
+         Se acabó!!
+         Orden dos
+         Porque en este caso si hay funcion callback
+         si hay una parte asincrona, por lo que primero se aparca esa promesa y despues se ejecuta.
+         */
+
+        // // Fragmento 3
+        // console.log("Empezamos...");
+        // const promise1 = new Promise((resolve, reject) => {
+        //     console.log("Orden uno")
+
+
+        //     resolve("Orden dos")
+        //     console.log("Orden tres")
+        // })
+        // promise1.then(respuesta => {
+        //     console.log(respuesta)
+        // })
+        // console.log("Se acabó!!");
+
+        /*
+        Empezamos...
+        Orden uno
+        Orden tres
+        Se acabó!!
+        Orden dos
+        De nuevo lo ultimo que se ejecuta es la funcion asincrona, aunque el console.log("Orden tres") este despues del resolve, se ejecuta antes */
+
+        // // Fragmento 4
+        // console.log("Empezamos...");
+        // const promise1 = new Promise((resolve, reject) => {
+        //     console.log("Orden uno")
+        // })
+        // promise1.then(respuesta => {
+        //     console.log("Orden dos")
+        // })
+        // console.log("Se acabó!!");
+
+        /* Empezamos...
+        Orden uno
+        Se acabó!!
+        Como no hay función callback, no hay ni resolve ni reject, por lo que no se ejecuta el bloque de codigo then.
+        */
+
+        // // Fragmento 5
+        // console.log("Empezamos...")
+        // const fn = () => (new Promise((resolve, reject) => {
+        //     console.log("Orden uno");
+        //     resolve("Ok")
+        // }))
+        // console.log("Orden dos")
+        // fn().then(res => {
+        //     console.log(res)
+        // })
+        // console.log("Se acabó!!")
+
+        /* Empezamos...
+        Orden dos
+        Orden uno
+        Se acabó!!
+        Ok
+        En este caso se ejecuta primero el console.log("Orden dos") porque metemos la promesa en una funcion y hasta que no la llamamos no se ejecuta. 
+        */
+
+        // Fragmento 6
+        console.log("Comenzamos...")
+        Promise.resolve("Orden uno").then((respuesta) => {
+            console.log(respuesta)
+        })
+        Promise.resolve("Orden dos").then((respuesta) => {
+            console.log(respuesta)
+        })
+        console.log("Se acabó!!")
+
+        /* Comenzamos...
+        Se acabó!!
+        Orden uno
+        Orden dos
+        Se ejecuta primero la parte sincrona del codigo y despues la asincrona.
+        */
+    </script>
+</body>
+
+</html>

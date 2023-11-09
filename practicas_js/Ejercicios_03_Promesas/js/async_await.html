@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // A partir de 2017 se introduce en la especificación de JS una nueva estructura para manejar código
+        // asíncrono. Esta estructura se denomina Async/await. Con Async/await se facilita el manejo de promesas y
+        // se consigue un código que se asemeja a una forma “más secuencial”.
+        // Intenta reescribir el código basado en promesas obtenido en el ejercicio anterior usando la estructura
+        // Async/await
+        // Clave: Se trata de “envolver” la promesa con una función declarada como async y después ejecutar el
+        // código consumidor y llamar a la función “asíncrona” con la palabra await
+
+        const prom = new Promise((resolve, reject) => {
+            if (Math.random() > 0.2) {
+                setTimeout(() => {
+                    resolve("Ok. Los datos han llegado");
+                }, 2000);
+            } else {
+                reject("Error en la comunicación!!");
+            }
+        });
+        async function printData() {
+            try {
+                let data = await prom;
+                console.log(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        printData();
+
+    </script>
+</body>
+
+</html>

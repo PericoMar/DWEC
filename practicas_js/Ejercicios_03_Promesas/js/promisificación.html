@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //Se denomina promisificación a la conversión de código asíncrono basado en callbacks a código basado en
+        // promesas. No siempre es posible hacerlo por unas cuestiones u otras, pero cuando es posible hacer la
+        // promisificación del código se mejora la legibilidad y el mantenimiento del mismo. Vamos a trabajar esta
+        // cuestión.
+
+        function getData(callback) {
+            if (Math.random() > 0.2) {
+                setTimeout(() => {
+                    callback("Ok. Los datos han llegado");
+                }, 2000);
+            } else {
+                callback("Error en la comunicación!!");
+            }
+        }
+        getData((data) => {
+            console.log(data);
+        });
+
+        //Convertido a promesa:
+
+        const prom = new Promise((reject,resolve) => {
+            if (Math.random() > 0.2) {
+                setTimeout(() => {
+                    resolve("Ok. Los datos han llegado");
+                }, 2000);
+            } else {
+                reject("Error en la comunicación!!");
+            }
+        })
+
+        prom
+        .then((result) =>{
+            console.log(result);
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    </script>
+</body>
+
+</html>
