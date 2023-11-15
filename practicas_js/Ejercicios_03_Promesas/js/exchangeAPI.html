@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <input id="valor">
+        <button id="enviar">Enviar</button>
+    </form>
+
+
+    <script>
+        const API_KEY = '9d33abfb2bfcb7da662285105bc2fccb';
+        fetch(`https://api.exchangeratesapi.io/v1/latest/?apiKey=${API_KEY}`)
+        .then(response => {
+            return response.json();
+        })
+        .then(response => {
+            console.log(response)
+        })
+    </script>
+</body>
+</html>

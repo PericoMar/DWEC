@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let counts = {};
+        const listaCiudades = ["Madrid", "Barcelona", "Valencia",
+        "Sevilla", "Zaragoza", "Málaga", "Madrid", "Barcelona",
+        "Madrid", "Valencia", "Sevilla","Sevilla",  "Madrid", "Zaragoza",
+        "Málaga", "Madrid", "Barcelona"];
+
+        // Metemos en el objeto counts cada ciudad con su cuenta.
+        // counts[x]("Madrid") = (la cuenta que lleve que si es null cogeremos 0) + 1
+        listaCiudades.forEach((x) => {counts[x] = (counts[x] || 0)+1});
+
+        // Covertimos el objeto en un array para poder ordenarlo.
+        // [Array(2), Array(2), Array(2), Array(2), Array(2), Array(2)]
+        // 0 : (2) ['Madrid', 5]
+        // 1 : (2) ['Barcelona', 3]
+        // 2 : (2) ['Sevilla', 3]
+        // 3 : (2) ['Valencia', 2]
+        // 4 : (2) ['Zaragoza', 2]
+        // 5 : (2) ['Málaga', 2]
+        countsArray = Object.entries(counts);
+
+
+        // Ordenamos el array con nuestro metodo de ordenacion, que se mete como una funcion callback dentro de la misma funcion sort.
+        // se pone b[1] - a[1] para que se ordene de mayor a menor. B Y A son cada uno de los arrays que hay dentro de countsArray.
+        countsArray = countsArray.sort((a , b) => b[1] - a[1]);
+
+        //Para terminar lo dejamos ordenado dentro de un objeto.
+        const sortedObj = {};
+        countsArray.forEach((array) => {
+            sortedObj[array[0]] = array[1];
+        })
+
+        console.log(sortedObj)
+        
+    </script>
+</body>
+</html>
