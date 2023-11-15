@@ -1,0 +1,15 @@
+.paleta{
+    display : flex;
+    justify-content: space-evenly;
+}
+
+.paleta div{
+    height : 100px;
+    width: 100px;
+}
+
+.selected{
+    height : 100px;
+    width: 100px;
+}
+
