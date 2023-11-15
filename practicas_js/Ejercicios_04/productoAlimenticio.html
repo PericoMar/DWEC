@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Definición del objeto ProductoAlimenticio
+        function ProductoAlimenticio(codigo, nombre, precio) {
+            this.codigo = codigo;
+            this.nombre = nombre;
+            this.precio = precio;
+        }
+
+        // Método para imprimir los datos del producto
+        ProductoAlimenticio.prototype.imprimeDatos = function () {
+            console.log(`Código: ${this.codigo}, Nombre: ${this.nombre}, Precio: ${this.precio}`);
+        };
+
+        // Creación de instancias del objeto ProductoAlimenticio
+        const producto1 = new ProductoAlimenticio('001', 'Arroz', 2.5);
+        const producto2 = new ProductoAlimenticio('002', 'Leche', 1.8);
+        const producto3 = new ProductoAlimenticio('003', 'Manzanas', 3.2);
+
+        // Guardar las instancias en un array
+        const productos1 = [producto1, producto2, producto3];
+
+        // Mostrar los valores de los tres objetos instanciados
+        productos.forEach(producto => {
+            producto.imprimeDatos();
+        });
+
+
+        //CON CLASES:
+        class ProductoAlimenticio {
+            constructor(codigo, nombre, precio) {
+                this.codigo = codigo;
+                this.nombre = nombre;
+                this.precio = precio;
+            }
+
+            imprimeDatos() {
+                console.log(`Código: ${this.codigo}, Nombre: ${this.nombre}, Precio: ${this.precio}`);
+            }
+        }
+
+        // Creación de instancias del objeto ProductoAlimenticio
+        const producto4 = new ProductoAlimenticio('001', 'Arroz', 2.5);
+        const producto5 = new ProductoAlimenticio('002', 'Leche', 1.8);
+        const producto6 = new ProductoAlimenticio('003', 'Manzanas', 3.2);
+
+        // Guardar las instancias en un array
+        const productos2 = [producto1, producto2, producto3];
+
+        // Mostrar los valores de los tres objetos instanciados
+        productos.forEach(producto => {
+            producto.imprimeDatos();
+        });
+
+    </script>
+</body>
+
+</html>
