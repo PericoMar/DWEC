@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            width: 100%;
+            height: 30px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form id="submit">
+        <input type="text" id="input">
+        <button type="submit" >Enviar</button>
+    </form>
+    <p class="cuenta">
+
+    </p>
+    <script>
+        const form = document.getElementById('submit');
+
+        function contarPalabras(texto){
+            texto = texto.trim();
+            return texto.split(" ").length;
+        }
+
+        form.addEventListener('submit', (ev) => {
+            ev.preventDefault();
+            input = document.getElementById("input");
+            const cuenta = document.getElementsByClassName("cuenta");
+            cuenta.innerHTML = contarPalabras(input.value);
+        })
+    </script>
+</body>
+</html>

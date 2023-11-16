@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        class Factura {
+            constructor(cliente, elementos, empresa) {
+                this.cliente = cliente;
+                this.elementos = elementos || {
+                    baseImponible: 0,
+                    iva: 21,
+                    total: 0,
+                    formaPago: "contado"
+                }
+                this.empresa = empresa || {
+                    nombre: "",
+                    direccion: "",
+                    telefono: "",
+                    cif: "B-00000000"
+                }
+            }
+
+            calculaTotal(){
+                this.elementos.total = this.elementos.baseImponible * (1 + this.elementos.iva / 100);
+            }
+
+            muestraTotal(){
+                console.log(this.elementos.total);
+            }
+        }
+
+        class Cliente{
+            constructor(nombre, direccion, telefono, nif){
+                this.nombre = nombre;
+                this.direccion = direccion;
+                this.telefono = telefono;
+                this.nif = nif;
+            }
+        }
+
+        //Pruebas:
+        let elementos1 = {
+            baseImponible: 100,
+            iva: 21,
+            total: 0,
+            formaPago: "contado"
+        }
+        let factura1 = new Factura(new Cliente("Pepe", "Calle de la piruleta", "666666666", "B-00000000"), elementos1, "Empresa1");
+        factura1.calculaTotal();
+        factura1.muestraTotal();
+
+    </script>
+</body>
+
+</html>
