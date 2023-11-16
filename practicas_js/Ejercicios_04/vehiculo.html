@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        function Vehiculo(marca, modelo, color, añoFabricación , cilindrada){
+            this.marca = marca;
+            this.modelo = modelo;
+            this.color = color;
+            this.añoFabricación = añoFabricación;
+            this.cilindrada = cilindrada;
+        }
+
+        Vehiculo.prototype.mostrarDatos = function(){
+            console.log(`Marca: ${this.marca}, Modelo: ${this.modelo}, Color: ${this.color}, Año de fabricación: ${this.añoFabricación}, Cilindrada: ${this.cilindrada}`);
+        }
+
+        Vehiculo.prototype.acelerar = function(velocidad){
+            console.log("El vehículo ha acelerado hasta " + velocidad + " km/h");
+        }
+
+        Vehiculo.prototype.arrancar = function(){
+            console.log("El vehículo ha arrancado");
+        }
+
+        Vehiculo.prototype.frenar = function(){
+            console.log("El vehículo ha frenado");
+        }
+        function Furgoneta(marca, modelo, color, añoFabricación , cilindrada, pasajeros){
+            this.base = Vehiculo;
+            this.base(marca, modelo, color, añoFabricación , cilindrada);
+            // Vehiculo.call(this, marca, modelo, color, añoFabricación , cilindrada);
+            this.pasajeros = pasajeros;
+        }
+
+        Furgoneta.prototype = new Vehiculo();
+
+        Furgoneta.prototype.mostrarDatos = function(){
+            Vehiculo.prototype.mostrarDatos.call(this);
+            console.log("Pasajeros: " + this.pasajeros);
+        }
+
+        function Todoterreno(marca, modelo, color, añoFabricación , cilindrada, traccion){
+            this.base = Vehiculo;
+            this.base(marca, modelo, color, añoFabricación , cilindrada);
+            // Vehiculo.call(this, marca, modelo, color, añoFabricación , cilindrada);
+            this.traccion = traccion;
+        }
+
+        Todoterreno.prototype = new Vehiculo();
+
+        //Pruebas:
+        const vehiculo1 = new Vehiculo("Seat", "Ibiza", "Rojo", 2010, 1400);
+        vehiculo1.mostrarDatos();
+        vehiculo1.acelerar(120);
+        vehiculo1.arrancar();
+        vehiculo1.frenar();
+        const furgoneta1 = new Furgoneta("Ford", "Transit", "Blanco", 2015, 2000, 9);
+        furgoneta1.mostrarDatos();
+        furgoneta1.acelerar(100);
+        furgoneta1.arrancar();
+        furgoneta1.frenar();
+        const todoterreno1 = new Todoterreno("Ford", "Transit", "Blanco", 2015, 2000, false);
+        todoterreno1.mostrarDatos();
+        todoterreno1.acelerar(100);
+        todoterreno1.arrancar();
+        todoterreno1.frenar();
+        
+        
+    </script>
+</body>
+</html>
