@@ -57,7 +57,7 @@
         // Pido los datos:
         const filas = pedirFilas();
         const columnas = pedirColumnas();
-        const minas = pedirMinas(numeroDeFilas, numeroDeColumnas);
+        const minas = pedirMinas(filas, columnas);
 
         //Construyo el tablero:
         let tablero = creaTablero();
@@ -68,7 +68,12 @@
         }
 
         //Pinto por consola el tablero:
-        console.table(tablero);  
+        let strTablero;
+        for(let i = 0; i < tablero.length ; i++){
+            tablero[i] = tablero[i].join(" ");
+        }
+        strTablero = tablero.join("\n")
+        alert(strTablero);
     </script>
 </body>
 
