@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function pideNumero() {
+            var numIntroducido = prompt("Introduce un numero de 3 cifras: ");
+            while (numIntroducido < 100 || numIntroducido > 999) {
+                numIntroducido = prompt("Introduce un numero de 3 cifras: ");
+            }
+            return numIntroducido;
+        }
+
+        function sacaDigitos(num) {
+            return [num % 10, parseInt(num / 10 % 10), parseInt(num / 100)];
+        }
+
+        function multiplicacionDigitos(digitos) {
+            var multiplicacion = 1;
+            for (let i = 0; i < digitos.length; i++) {
+                multiplicacion = multiplicacion * digitos[i];
+            }
+            return multiplicacion;
+        }
+        const numIntroducido = pideNumero();
+        const digitos = sacaDigitos(numIntroducido);
+        const multiplicacion = multiplicacionDigitos(digitos);
+
+        alert("La multiplicacion de las cifras de " + numIntroducido + " es: " + multiplicacion);
+    </script>
+</body>
+
+</html>
