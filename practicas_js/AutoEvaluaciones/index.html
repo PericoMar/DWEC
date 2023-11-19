@@ -8,18 +8,29 @@
 </head>
 
 <body>
-    <script>
-        let filas = parseInt(prompt("Inserte filas: "));
-        while (filas < 2) {
-            filas = prompt("Inserte filas: ");
+    <script> 
+        function pedirFilas() {
+            let filas = parseInt(prompt("Inserte filas: "));
+            while (filas < 2) {
+                filas = parseInt(prompt("Inserte filas (debe ser mayor o igual a 2): "));
+            }
+            return filas;
         }
-        let columnas = parseInt(prompt("Inserte columnas: "));
-        while (columnas < 2) {
-            columnas = prompt("Inserte columnas: ");
+
+        function pedirColumnas() {
+            let columnas = parseInt(prompt("Inserte columnas: "));
+            while (columnas < 2) {
+                columnas = parseInt(prompt("Inserte columnas (debe ser mayor o igual a 2): "));
+            }
+            return columnas;
         }
-        let minas = parseInt(prompt("Inserte numero de minas: "));
-        while (minas > columnas * filas / 3) {
-            minas = prompt("Inserte numero de minas: ");
+
+        function pedirMinas(filas, columnas) {
+            let minas = parseInt(prompt("Inserte número de minas: "));
+            while (minas > (columnas * filas) / 3) {
+                minas = parseInt(prompt(`Inserte número de minas (debe ser menor o igual a ${Math.floor((columnas * filas) / 3)}): `));
+            }
+            return minas;
         }
 
         function creaTablero() {
@@ -42,13 +53,21 @@
                 tablero[filaRandom][columnaRandom] = "*";
             }
         }
+        
+        // Pido los datos:
+        const filas = pedirFilas();
+        const columnas = pedirColumnas();
+        const minas = pedirMinas(numeroDeFilas, numeroDeColumnas);
 
+        //Construyo el tablero:
         let tablero = creaTablero();
 
+        //Inserto las minas:
         for (let i = 0; i < minas; i++) {
             insertaMina(tablero);
         }
 
+        //Pinto por consola el tablero:
         console.table(tablero);  
     </script>
 </body>
