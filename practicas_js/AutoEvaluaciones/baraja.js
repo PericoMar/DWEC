@@ -54,15 +54,6 @@ function Baraja(){
         else valor++;
     }
 
-    // this.barajar = function () {
-    //     let aux;
-    //     for(let i = 0; i < N_CARTAS; i++){
-    //         let pos = Math.floor(Math.random() * N_CARTAS);
-    //         aux = _baraja[i];
-    //         _baraja[i] = _baraja[pos];
-    //         _baraja[pos] = aux;
-    //     }
-    // }
 
     this.barajar = function () {
         for(let c = 1; c <= 100 ; c++){
