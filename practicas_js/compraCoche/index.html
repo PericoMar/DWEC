@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra Coche</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <main>
+        <div class="row justify-content-center">
+            <div class="col-md-3 mb-4 p-5">
+                <div class="card mb-4 p-5" style="max-width: 540px;">
+                    <img src="img/cocheBlanco.png" class="img-fluid rounded-start" alt="Coche-blanco" id="imgCoche">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" id="card-body">
+                        <h5 class="card-title" id="title">Coche Blanco</h5>
+                        <p class="card-text" id="descrip">Coche blanco ultimo modelo. Diesel puro. Empieza a ahorrar para pagar el combustible</p>
+                        <p class="card-text"><small class="text-muted" id="smallDesc">Disponible hasta fin de existencias</small></p>
+                        <select class="form-select form-select-md mb-3" id="select">
+                            <option selected>Selecciona modelo...</option>
+                            <option value="blanco" >Coche Blanco</option>
+                            <option value="rojo" >Coche Rojo</option>
+                            <option value="verde" >Coche Verde</option>
+                        </select>
+                        <a href="#" class="btn btn-primary" id="compra">Comprar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+</html>

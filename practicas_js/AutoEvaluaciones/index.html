@@ -68,11 +68,7 @@
         }
 
         //Pinto por consola el tablero:
-        let strTablero;
-        for(let i = 0; i < tablero.length ; i++){
-            tablero[i] = tablero[i].join(" ");
-        }
-        strTablero = tablero.join("\n")
+        let strTablero = tablero.map(fila => fila.join(" ")).join("\n");
         alert(strTablero);
     </script>
 </body>
