@@ -50,6 +50,9 @@ select.addEventListener('change', () => {
         colorSelected = db[cocheSeleccionado].color;
         console.log(colorSelected);
     }
+    msgCompra.innerHTML = "Comprar";
+    msgCompra.style.backgroundColor = "blue";
+    msgCompra.style.color = "white";
 })
 
 const btn = document.getElementById("compra");
