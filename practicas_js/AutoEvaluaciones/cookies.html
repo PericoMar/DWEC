@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        function getCookieValue(cookieName) {
+            const match = document.cookie.match(new RegExp(`${cookieName}=([^;]+)`));
+            return match ? match[1] : null;
+        }
+
+        function setCookie(name, value, expiration) {
+            document.cookie = `${name}=${value}; expires=${expiration.toUTCString()};`;
+        }
+
+        function displayVisitMessage(visits) {
+            const p = document.createElement("p");
+            p.innerHTML = `Esta es tu visita número <strong>${visits}</strong>`;
+            document.body.appendChild(p);
+        }
+
+        const cookieName = 'cookie';
+        const visitCountName = 'visitas';
+        const hasCookie = getCookieValue(cookieName) === 'si';
+
+        if (!hasCookie) {
+            const userConsent = confirm("Esta página usa una cookie para almacenar el número de visitas que hace cada usuario. Si está conforme con ello, pulse Sí. De lo contrario, la página no realizará su labor y eliminará las cookies existentes.");
+
+            if (userConsent) {
+                setCookie(cookieName, 'si', new Date(Date.now() + 1000 * 3600 * 24 * 365));
+            } else {
+                setCookie(cookieName, 'no', new Date('Sat, 01 Jan 2000 00:00:01 GMT'));
+                setCookie(visitCountName, '', new Date('Sat, 01 Jan 2000 00:00:01 GMT'));
+            }
+        }
+
+        const visitCount = parseInt(getCookieValue(visitCountName)) || 0;
+        setCookie(visitCountName, visitCount + 1, new Date(Date.now() + 1000 * 3600 * 24 * 365));
+        displayVisitMessage(visitCount + 1);
+
+
+    </script>
+</body>
+
+</html>

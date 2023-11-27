@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="p1">Necesitamos un <strong>nuevo</strong> juego de llaves</p>
+
+    <script>
+        const p1 = document.getElementById("p1")
+
+        for (let hijo of p1.children){
+            console.log(hijo.textContent)
+        }
+    </script>
+</body>
+</html>
