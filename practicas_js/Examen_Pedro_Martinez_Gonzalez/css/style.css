@@ -1,0 +1,38 @@
+body {
+	height: 90vh;
+	background-color: #dddfe6;
+}
+
+.container {
+	max-width: 400px;
+}
+
+.textoFiltrado {
+	/* Para mostrar como funciona los pintamos de color rojo */
+	/* color: #F71E35;     */
+	/* A los que no coinciden con la busqueda los ocultamos */
+	display: none !important;
+	/* alternativa a display none */
+	/* visibility: hidden; */
+}
+
+#buscar {
+	width: 100%;
+}
+
+/* Para iconos */
+.fa-minus-circle {
+	padding-top: 5px;
+	color: #F71E35;
+	font-size: 20px;
+}
+
+.fa-plus {
+	color: bisque;
+	font-size: large;
+}
+
+.fa-download {
+	color: bisque;
+	font-size: large;
+}

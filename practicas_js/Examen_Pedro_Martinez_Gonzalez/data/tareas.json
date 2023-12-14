@@ -1,0 +1,7 @@
+[
+    { "id": 1, "tarea": "Press de banca" },
+    { "id": 2, "tarea": "Lateral raises" },
+    { "id": 3, "tarea": "Incline bench press" },
+    { "id": 4, "tarea": "Shoulder press" },
+    { "id": 5, "tarea": "Triceps pushdowns" }
+]
