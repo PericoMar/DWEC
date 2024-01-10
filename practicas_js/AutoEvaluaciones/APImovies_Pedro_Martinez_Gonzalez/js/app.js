@@ -2,6 +2,7 @@ const apiKey = "4fa37e58b6614d137adc5a2de6dc7fc8";
 const totalPeliculas = 100; // Cantidad total de películas que deseas obtener
 const peliculasPorPagina = 20; // Cantidad de películas por página en TMDb
 const contenedor = document.getElementById("contenedor");
+const btn = document.getElementById("sig");
 
 async function obtenerPeliculasPopulares() {
   try {
@@ -29,14 +30,18 @@ async function obtenerPeliculasPopulares() {
     // Obtener las primeras 100 películas del listado
     const peliculasMasPopulares = peliculas.slice(0, totalPeliculas);
 
-
     // Primero las ordeno por nota:
-    peliculasMasPopulares.sort((a,b)=>{
-        return b.vote_average - a.vote_average;
+    peliculasMasPopulares.sort((a, b) => {
+      return b.vote_average - a.vote_average;
     })
-    console.log(peliculasMasPopulares);
-    desplegarCuadroPeliculas(peliculasMasPopulares);
-
+    
+    desplegarCuadroPeliculas(peliculasMasPopulares, 0);
+    let page = 0;
+    btn.addEventListener("click", () => {
+      contenedor.innerHTML = '';
+      page++;
+      desplegarCuadroPeliculas(peliculasMasPopulares, page % 5);
+    })
 
   } catch (error) {
     // Manejar errores
@@ -44,25 +49,29 @@ async function obtenerPeliculasPopulares() {
   }
 }
 
-function desplegarCuadroPeliculas(peliculasMasPopulares){
-    for(let i = 20; i < 40 ; i++){
-        desplegarPelicula(peliculasMasPopulares[i]);
-    }
+//Función que recorre cada pagina insertando el HTML con su contenido:
+function desplegarCuadroPeliculas(peliculasMasPopulares, page) {
+  for (let i = page * 20; i < (page + 1) * 20; i++) {
+    desplegarPelicula(peliculasMasPopulares[i]);
+  }
 }
 
-function desplegarPelicula(pelicula){
-    let divPelicula = document.createElement("div");
-    divPelicula.classList.add("pelicula");
-    contenedor.appendChild(divPelicula);
-    let portada = document.createElement("img");
-    portada.classList.add("poster");
-    portada.src = `https://image.tmdb.org/t/p/w500/${pelicula.poster_path}`;
-    divPelicula.appendChild(portada);
-    let titulo = document.createElement("h4");
-    titulo.classList.add("titulo");
-    titulo.innerHTML = pelicula.title;
-    divPelicula.appendChild(titulo);
+//Función inserta HTML más contenido:
+function desplegarPelicula(pelicula) {
+  let divPelicula = document.createElement("div");
+  divPelicula.classList.add("pelicula");
+  contenedor.appendChild(divPelicula);
+  let portada = document.createElement("img");
+  portada.classList.add("poster");
+  portada.src = `https://image.tmdb.org/t/p/w500/${pelicula.poster_path}`;
+  divPelicula.appendChild(portada);
+  let titulo = document.createElement("h4");
+  titulo.classList.add("titulo");
+  titulo.innerHTML = pelicula.title;
+  divPelicula.appendChild(titulo);
 }
 
 obtenerPeliculasPopulares();
+
+
 
