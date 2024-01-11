@@ -6,12 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const botonesAnterior = document.querySelectorAll(".btn-anterior");
     let pasoActual = 1;
 
-
+    //NO HACE FALTA CAMIAR NADA:
     function actualizarBarraDeProgreso() {
         const progreso = ((pasoActual - 1) / (pasos.length - 1)) * 100;
-        console.log(progreso);
         progressBar.style = `width: ${progreso}%`
     }
+
+
     function siguientePaso() {
         pasos[pasoActual - 1].style.display = "none";
         pasoActual++;
