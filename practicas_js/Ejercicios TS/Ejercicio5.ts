@@ -20,7 +20,7 @@ class Rectangulo {
     readonly base : number;
     readonly altura : number;
 
-    constructor(base, altura){
+    constructor(base : number, altura : number){
         this.base = base;
         this.altura = altura;
     }
