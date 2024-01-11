@@ -4,6 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const botonesSiguiente = document.querySelectorAll(".btn-siguiente");
     const progressBar = document.querySelector(".progress-bar")
     const botonesAnterior = document.querySelectorAll(".btn-anterior");
+    const inputNombre = document.getElementById("campo1");
+    const botonNombre = document.getElementById("btn-nombre");
+    const REGEXNOMBRE = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+
     let pasoActual = 1;
 
     //NO HACE FALTA CAMIAR NADA:
@@ -12,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         progressBar.style = `width: ${progreso}%`
     }
 
-
+    //Funciones para pasar de pagina:
     function siguientePaso() {
         pasos[pasoActual - 1].style.display = "none";
         pasoActual++;
@@ -41,5 +45,17 @@ document.addEventListener("DOMContentLoaded", function () {
         boton.addEventListener("click", pasoAnterior);
     });
 
+    
+    
+    botonNombre.disabled = true;
+    inputNombre.addEventListener("input" , () => {
+        if(REGEXNOMBRE.test(inputNombre.value)){
+            botonNombre.disabled = false;
+        }
+    })
+
+
     formulario.addEventListener("submit", (e) => e.preventDefault());
+
+
 });
