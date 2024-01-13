@@ -7,6 +7,7 @@ Con inputs tipo:
 -Fecha.
 -Direccion.
 -Codigo postal.
+-Telefono
 -Tarjeta (Opc)
 -Email.
 -DNI.

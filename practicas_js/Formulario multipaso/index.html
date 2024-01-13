@@ -22,22 +22,22 @@
                 <div class="shadow p-3 mb-5 bg-body rounded">
                     <form id="formRegistro">
                         <div class="paso" data-paso="1">
-                            <h2>Paso 1</h2>
+                            <h2>Nombre y Apellidos</h2>
                             <div class="input-group p-2">
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    class="form-control input-nomape"
                                     name="campo1"
-                                    id="campo1"
+                                    id="input-nom"
                                     placeholder="Campo1"
                                 />
                             </div>
                             <div class="input-group p-2">
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    class="form-control input-nomape"
                                     name="campo2"
-                                    id="campo2"
+                                    id="input-ape"
                                     placeholder="Campo2"
                                 />
                             </div>
@@ -47,32 +47,23 @@
                             </div>
                         </div>
                         <div class="paso" data-paso="2">
-                            <h2>Paso 2</h2>
-                            <div class="input-group p-2">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="campo3"
-                                    id="campo3"
-                                    placeholder="Campo3"
-                                />
-                            </div>
-                            <div class="input-group p-2">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="campo4"
-                                    id="campo4"
-                                    placeholder="Campo4"
-                                />
-                            </div>
+                            <h2></h2>
+                            
                             <div class="d-flex p-2 justify-content-between">
                                 <button class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
-                                <button class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
+                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-gen">Siguiente</button>
                             </div>
                         </div>
                         <div class="paso" data-paso="3">
-                            <h2>Paso 3</h2>
+                            <h2>Género y Fecha de nacimiento</h2>
+                            <div class="input-group p-2">
+                                <select name="genero" id="select-gen">
+                                    <option value="">Seleccione uno...</option>
+                                    <option value="masculino">Masculino</option>
+                                    <option value="femenino">Femenino</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
                             <div class="input-group p-2">
                                 <input
                                     type="text"
@@ -97,7 +88,7 @@
                             </div>
                         </div>
                         <div class="paso" data-paso="4">
-                            <h2>Paso 4</h2>
+                            <h2>Información de contacto</h2>
                             <div class="input-group p-2">
                                 <input
                                     type="text"
