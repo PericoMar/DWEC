@@ -26,19 +26,19 @@
                             <div class="input-group p-2">
                                 <input
                                     type="text"
-                                    class="form-control input-nomape"
+                                    class="form-control"
                                     name="campo1"
                                     id="input-nom"
-                                    placeholder="Campo1"
+                                    placeholder="Nombre"
                                 />
                             </div>
                             <div class="input-group p-2">
                                 <input
                                     type="text"
-                                    class="form-control input-nomape"
+                                    class="form-control"
                                     name="campo2"
                                     id="input-ape"
-                                    placeholder="Campo2"
+                                    placeholder="Apellidos"
                                 />
                             </div>
                             <div class="d-flex p-2 justify-content-between">
@@ -47,17 +47,43 @@
                             </div>
                         </div>
                         <div class="paso" data-paso="2">
-                            <h2></h2>
-                            
+                            <h2>Información de cuenta</h2>
+                            <div class="input-group p-2">
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    name="campo1"
+                                    id="input-email"
+                                    placeholder="Email"
+                                />
+                            </div>
+                            <div class="input-group p-2">
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    name="campo2"
+                                    id="input-password"
+                                    placeholder="Contraseña"
+                                />
+                            </div>
+                            <div class="input-group p-2">
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    name="campo2"
+                                    id="input-password2"
+                                    placeholder="Confirmar Contraseña"
+                                />
+                            </div>
                             <div class="d-flex p-2 justify-content-between">
                                 <button class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
-                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-gen">Siguiente</button>
+                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-info">Siguiente</button>
                             </div>
                         </div>
                         <div class="paso" data-paso="3">
                             <h2>Género y Fecha de nacimiento</h2>
                             <div class="input-group p-2">
-                                <select name="genero" id="select-gen">
+                                <select class="form-select" name="genero" id="select-gen">
                                     <option value="">Seleccione uno...</option>
                                     <option value="masculino">Masculino</option>
                                     <option value="femenino">Femenino</option>
@@ -66,25 +92,16 @@
                             </div>
                             <div class="input-group p-2">
                                 <input
-                                    type="text"
+                                    type="date"
                                     class="form-control"
                                     name="campo5"
-                                    id="campo5"
+                                    id="input-fecha"
                                     placeholder="Campo5"
-                                />
-                            </div>
-                            <div class="input-group p-2">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="campo6"
-                                    id="campo6"
-                                    placeholder="Campo6"
                                 />
                             </div>
                             <div class="d-flex p-2 justify-content-between">
                                 <button class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
-                                <button class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
+                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-details">Siguiente</button>
                             </div>
                         </div>
                         <div class="paso" data-paso="4">

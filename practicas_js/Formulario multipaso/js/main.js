@@ -9,10 +9,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputNombre = document.getElementById("input-nom");
     const inputApe = document.getElementById("input-ape");
     const botonNombre = document.getElementById("btn-nombre");
-    const REGEXNOMBRE = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+    const REGEXNOMBRE = /^([A-ZÁÉÍÓÚÑa-zñáéíóúñ]{1,}'?-?[A-ZÁÉÍÓÚÑa-zñáéíóú]+[\s]*)+$/;
+
+    const inputEmail = document.getElementById("input-email");
+    const inputPassword = document.getElementById("input-password");
+    const inputPassword2 = document.getElementById("input-password2");
+    const botonInfo = document.getElementById("btn-info");
+    const REGEXEMAIL = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])/;
 
     const selectGenero = document.getElementById("select-gen");
-    const botonGenero = document.getElementById("btn-gen");
+    const botonDetalles = document.getElementById("btn-details");
 
 
     let pasoActual = 1;
@@ -54,7 +60,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
     //Variables para comprobar si es correcto cada vez que haga un cambio en los campos:
-    let nom, ape;
+    let nom, ape = " ";
+    let email , contraseña ,contraseña2;
     let gen;
 
     function validarNomApe() {
@@ -65,17 +72,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function validarInfoCuenta() {
+        if(REGEXEMAIL.test(email)){
+            botonInfo.disabled = false;
+        } else {
+            botonInfo.disabled = true;
+        }
+    }
+
     function validarGenero() {
         if(gen){
-            botonGenero.disabled = false;
+            botonDetalles.disabled = false;
         } else {
-            botonGenero.disabled = true;
+            botonDetalles.disabled = true;
         }
     }
 
     // Botones desactivados con los campos vacios:
     botonNombre.disabled = true;
-    botonGenero.disabled = true;
+    botonInfo.disabled = true;
+    botonDetalles.disabled = true;
 
     // Controlamos el evento input para saber lo que pone cada vez que hace un cambio,
     // no pongo change porque en change tiene que perder el foco y lo normal en un formulario
@@ -92,6 +108,10 @@ document.addEventListener("DOMContentLoaded", function () {
         validarNomApe();
     })
 
+    inputEmail.addEventListener("input" , () => {
+        email = inputEmail.value;
+        validarInfoCuenta();
+    })
 
     selectGenero.addEventListener("change" , () => {
         gen = selectGenero.value;
