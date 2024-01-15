@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const REGEX_EMAIL = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])/;
 
     const selectGenero = document.getElementById("select-gen");
+    const inputDate = document.getElementById("input-fecha");
+    const msgDate = document.getElementById("msg-date");
     const btnDetalles = document.getElementById("btn-details");
 
 
@@ -67,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //Variables para comprobar si es correcto cada vez que haga un cambio en los campos:
     let nom, ape = " ";
     let email, password = "", passwordConfirm;
-    let gen;
+    let gen, dateOfBirth;
 
     function validateNomApe() {
         if (REGEX_NOMBRE.test(nom) && REGEX_NOMBRE.test(ape)) {
@@ -81,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let strength = calculatePasswordStrength(password);
         updateStrengthMeter(strength);
 
-        if(REGEX_EMAIL.test(email) && password === passwordConfirm && password.length >= MIN_PASSWD_LENGTH){
+        if (REGEX_EMAIL.test(email) && password === passwordConfirm && password.length >= MIN_PASSWD_LENGTH) {
             btnInfo.disabled = false;
         } else {
             btnInfo.disabled = true;
@@ -96,8 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function msgPasswordMatch(){
-        if(password === passwordConfirm){
+    function msgPasswordMatch() {
+        if (password === passwordConfirm) {
             msgPasswdMatch.style.display = 'none';
         } else {
             msgPasswdMatch.style.display = 'block';
@@ -142,11 +144,40 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function validateGenderAndBirth() {
-        if (gen) {
+        console.log(isAdult());
+        if(isAdult()){
+            msgDate.style.display = 'none';
+        } else {
+            msgDate.style.display = 'block';
+        }
+
+        if (gen && isAdult() && dateIsCorrect()) {
             btnDetalles.disabled = false;
         } else {
             btnDetalles.disabled = true;
         }
+    }
+
+    function isAdult() {
+        const dateOfBirthObj = new Date(dateOfBirth);
+        const date = new Date();
+        let diferenciaAnios = date.getFullYear() - dateOfBirthObj.getFullYear();
+
+        // Ajusta la diferencia si la fecha de nacimiento no ha ocurrido todavía este año
+        if (
+            date.getMonth() < dateOfBirthObj.getMonth() ||
+            (date.getMonth() === dateOfBirthObj.getMonth() && date.getDate() < dateOfBirthObj.getDate())
+        ) {
+            diferenciaAnios--;
+        }
+
+        return diferenciaAnios > 18;
+    }
+
+    function dateIsCorrect() {
+        const dateOfBirthObj = new Date(dateOfBirth);
+        const date = new Date();
+        return date.getFullYear() - dateOfBirthObj.getFullYear() < 120;
     }
 
     // Botones desactivados con los campos vacios:
@@ -178,9 +209,10 @@ document.addEventListener("DOMContentLoaded", function () {
         password = inputPassword.value;
         validateAccountInfo();
         msgPassword();
+        msgPasswordMatch();
     });
 
-    inputPasswordConfirm.addEventListener("input" , () => {
+    inputPasswordConfirm.addEventListener("input", () => {
         passwordConfirm = inputPasswordConfirm.value;
         validateAccountInfo();
         msgPasswordMatch();
@@ -193,6 +225,10 @@ document.addEventListener("DOMContentLoaded", function () {
         validateGenderAndBirth();
     });
 
+    inputDate.addEventListener("change", () => {
+        dateOfBirth = inputDate.value;
+        validateGenderAndBirth();
+    })
 
     formulario.addEventListener("submit", (e) => e.preventDefault());
 
