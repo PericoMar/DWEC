@@ -7,7 +7,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css" rel="stylesheet">
+        
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -67,6 +68,9 @@
                                     id="input-password"
                                     placeholder="Contraseña"
                                 />
+                                <button class="btn btn-outline-secondary" id="btn-show-hide-pass">
+                                    <img src="img/eye.svg" alt="Show password" id="eye-img">
+                                </button>
                             </div>
                             <div id="strength-meter" class="progress" style="height: 3px; margin:3px 0px;">
                                 <div id="strength-bar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
@@ -80,6 +84,9 @@
                                     id="input-password2"
                                     placeholder="Confirmar Contraseña"
                                 />
+                                <button class="btn btn-outline-secondary" id="btn-show-hide-pass-match">
+                                    <img src="img/eye.svg" alt="Show password" id="eye-img-match">
+                                </button>
                             </div>
                             <div class="pass-match" id="msg-passwd-match" style="display:none;"><small class="text-muted">Las contraseñas no coinciden.</small></div>
                             <div class="d-flex p-2 justify-content-between">

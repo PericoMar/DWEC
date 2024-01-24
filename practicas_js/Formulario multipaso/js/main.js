@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputNombre = document.getElementById("input-nom");
     const inputApe = document.getElementById("input-ape");
     const btnNombre = document.getElementById("btn-nombre");
-    const REGEX_NOMBRE = /^([A-ZÁÉÍÓÚÑa-zñáéíóúñ]{1,}'?-?[A-ZÁÉÍÓÚÑa-zñáéíóú]+[\s]*)+$/;
+    const REGEX_NOMBRE = /^([A-ZÁÉÍÓÚÑa-zñáéíóúñ]{1,}'?-?[A-ZÁÉÍÓÚÑa-zñáéíóú]*[\s]*[A-ZÁÉÍÓÚÑa-zñáéíóúñ]{1,})+$/;
 
     const inputEmail = document.getElementById("input-email");
     const inputPassword = document.getElementById("input-password");
@@ -21,6 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const strengthBar = document.getElementById('strength-bar');
     const btnInfo = document.getElementById("btn-info");
     const REGEX_EMAIL = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])/;
+    const btnShowHidePass = document.getElementById("btn-show-hide-pass");
+    const btnShowHidePassMatch = document.getElementById("btn-show-hide-pass-match");
+    const ImgEye = document.getElementById("eye-img");
+    const ImgEyeMatch = document.getElementById("eye-img-match");
 
     const selectGenero = document.getElementById("select-gen");
     const inputDate = document.getElementById("input-fecha");
@@ -68,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Variables para comprobar si es correcto cada vez que haga un cambio en los campos:
     let nom, ape = " ";
-    let email, password = "", passwordConfirm;
+    let email, password, passwordConfirm;
     let gen, dateOfBirth;
 
     function validateNomApe() {
@@ -212,10 +216,30 @@ document.addEventListener("DOMContentLoaded", function () {
         msgPasswordMatch();
     });
 
+    btnShowHidePass.addEventListener("click" , () => {
+        if(inputPassword.type === 'password'){
+            inputPassword.type = 'text';
+            ImgEye.src = "img/eye-slash.svg";
+        } else {
+            inputPassword.type = 'password';
+            ImgEye.src = "img/eye.svg";
+        }
+    });
+
     inputPasswordConfirm.addEventListener("input", () => {
         passwordConfirm = inputPasswordConfirm.value;
         validateAccountInfo();
         msgPasswordMatch();
+    });
+
+    btnShowHidePassMatch.addEventListener("click" , () => {
+        if(inputPasswordConfirm.type === 'password'){
+            inputPasswordConfirm.type = 'text';
+            ImgEyeMatch.src = "img/eye-slash.svg";
+        } else {
+            inputPasswordConfirm.type = 'password';
+            ImgEyeMatch.src = "img/eye.svg";
+        }
     });
 
     selectGenero.addEventListener("change", () => {
