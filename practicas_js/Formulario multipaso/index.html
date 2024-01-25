@@ -60,6 +60,7 @@
                                     placeholder="Email"
                                 />
                             </div>
+                            <div id="msg-email" style="display:none;"><small id="password-strenght" class="text-muted">El email no tiene un formato correcto</small></div>
                             <div class="input-group p-2">
                                 <input
                                     type="password"
@@ -122,7 +123,7 @@
                         </div>
                         <div class="paso" data-paso="4">
                             <!-- Información de contacto -->
-                            <h2>Información de contacto</h2>
+                            <h2>Dirección</h2>
                             <div class="input-group p-2">
                                 <input
                                     type="text"
@@ -130,7 +131,11 @@
                                     name="campo7"
                                     id="campo7"
                                     placeholder="Campo7"
+                                    list="paises"
                                 />
+                                <datalist id="paises">
+                                    
+                                </datalist>
                             </div>
                             <div class="input-group p-2">
                                 <input

@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputPasswordConfirm = document.getElementById("input-password2");
     const msgPasswd = document.getElementById("msg-passwd");
     const msgPasswdMatch = document.getElementById("msg-passwd-match");
+    const msgTextEmail = document.getElementById("msg-email");
     const MIN_PASSWD_LENGTH = 8;
     //Gestion de la barra de fuerza de la contraseña
     const strengthBar = document.getElementById('strength-bar');
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Variables para comprobar si es correcto cada vez que haga un cambio en los campos:
     let nom, ape = " ";
-    let email, password, passwordConfirm;
+    let email, password ="", passwordConfirm = "";
     let gen, dateOfBirth;
 
     function validateNomApe() {
@@ -110,6 +111,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function msgEmail(){
+        if(REGEX_EMAIL.test(email)){
+            msgTextEmail.style.display = 'none';
+        } else {
+            msgTextEmail.style.display = 'block';
+        }
+    }
+
     //En este caso voy a hacer una función sencilla pero se podrian añadir más controles:
     function calculatePasswordStrength(password) {
         let strength = 0;
@@ -132,7 +141,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateStrengthMeter(strength) {
-        console.log(strength);
         // Actualizar el ancho de la barra de progreso y el color
         strengthBar.style = `width: ${strength}%`
         if (strength <= 25) {
@@ -148,7 +156,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function validateGenderAndBirth() {
-        console.log(isAdult());
         if(isAdult()){
             msgDate.style.display = 'none';
         } else {
@@ -207,6 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
     inputEmail.addEventListener("input", () => {
         email = inputEmail.value;
         validateAccountInfo();
+        msgEmail();
     });
 
     inputPassword.addEventListener("input", () => {
