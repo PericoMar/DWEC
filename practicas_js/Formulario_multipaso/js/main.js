@@ -27,11 +27,62 @@ document.addEventListener("DOMContentLoaded", function () {
     const ImgEye = document.getElementById("eye-img");
     const ImgEyeMatch = document.getElementById("eye-img-match");
 
+    // Datos adicionales
     const selectGenero = document.getElementById("select-gen");
     const inputDate = document.getElementById("input-fecha");
     const msgDate = document.getElementById("msg-date");
     const btnDetalles = document.getElementById("btn-details");
 
+    // Dirección
+    var paises = {
+        "España": {
+            "ingles": "Spain",
+            "ciudades": ["Madrid", "Barcelona", "Valencia", "Sevilla", "Zaragoza", "Málaga", "Murcia", "Palma de Mallorca", "Las Palmas de Gran Canaria", "Bilbao", "Alicante", "Córdoba", "Valladolid", "Vigo", "Gijón"]
+        },
+        "Francia": {
+            "ingles": "France",
+            "ciudades": ["París", "Marsella", "Lyon", "Toulouse", "Niza", "Nantes", "Estrasburgo", "Montpellier", "Burdeos", "Lille", "Rennes", "Reims", "Saint-Étienne", "Toulon", "Le Havre"]
+        },
+        "Alemania": {
+            "ingles": "Germany",
+            "ciudades": ["Berlín", "Hamburgo", "Múnich", "Colonia", "Fráncfort del Meno", "Stuttgart", "Düsseldorf", "Dortmund", "Essen", "Leipzig", "Dresde", "Hanóver", "Núremberg", "Duisburgo", "Bochum"]
+        },
+        "Italia": {
+            "ingles": "Italy",
+            "ciudades": ["Roma", "Milán", "Nápoles", "Turín", "Palermo", "Génova", "Bolonia", "Florencia", "Bari", "Catania", "Venecia", "Verona", "Messina", "Padua", "Trieste"]
+        },
+        "Reino Unido": {
+            "ingles": "United Kingdom",
+            "ciudades": ["Londres", "Birmingham", "Mánchester", "Glasgow", "Liverpool", "Edimburgo", "Bristol", "Newcastle", "Sheffield", "Cardiff", "Leeds", "Nottingham", "Southampton", "Belfast", "Plymouth"]
+        },
+        "Países Bajos": {
+            "ingles": "Netherlands",
+            "ciudades": ["Ámsterdam", "Róterdam", "La Haya", "Utrecht", "Eindhoven", "Tilburgo", "Groninga", "Almere", "Breda", "Nimega", "Enschede", "Haarlem", "Arnhem", "Zwolle", "Maastricht"]
+        },
+        "Suecia": {
+            "ingles": "Sweden",
+            "ciudades": ["Estocolmo", "Gotemburgo", "Malmö", "Uppsala", "Linköping", "Västerås", "Örebro", "Norrköping", "Helsingborg", "Jönköping", "Umeå", "Lund", "Borås", "Sundsvall", "Gävle"]
+        },
+        "Portugal": {
+            "ingles": "Portugal",
+            "ciudades": ["Lisboa", "Oporto", "Braga", "Coímbra", "Aveiro", "Funchal", "Évora", "Faro", "Setúbal", "Portimão", "Vila Nova de Gaia", "Amadora", "Queluz", "Agualva-Cacém", "Almada"]
+        },
+        "Grecia": {
+            "ingles": "Greece",
+            "ciudades": ["Atenas", "Salónica", "El Pireo", "Patras", "Larisa", "Heraklion", "Volos", "Ioánina", "Kavala", "Komotini", "Rodas", "Chania", "Chalcis", "Lamia", "Alexandroupoli"]
+        }
+    }
+    const datalistPais = document.getElementById("paises");
+    const inputPais = document.getElementById("input-pais");
+    const datalistCiudad = document.getElementById("ciudades");
+    const inputCiudad = document.getElementById("input-ciudad");
+
+    for (let pais in paises) {
+        optionPais = document.createElement("option");
+        optionPais.value = pais;
+        optionPais.innerHTML = paises[pais]["ingles"];
+        datalistPais.appendChild(optionPais);
+    }
 
     let pasoActual = 1;
 
@@ -73,8 +124,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Variables para comprobar si es correcto cada vez que haga un cambio en los campos:
     let nom, ape = " ";
-    let email, password ="", passwordConfirm = "";
+    let email, password = "", passwordConfirm = "";
     let gen, dateOfBirth;
+    let pais, ciudad;
 
     function validateNomApe() {
         if (REGEX_NOMBRE.test(nom) && REGEX_NOMBRE.test(ape)) {
@@ -111,8 +163,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function msgEmail(){
-        if(REGEX_EMAIL.test(email)){
+    function msgEmail() {
+        if (REGEX_EMAIL.test(email)) {
             msgTextEmail.style.display = 'none';
         } else {
             msgTextEmail.style.display = 'block';
@@ -156,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function validateGenderAndBirth() {
-        if(isAdult()){
+        if (isAdult()) {
             msgDate.style.display = 'none';
         } else {
             msgDate.style.display = 'block';
@@ -224,8 +276,8 @@ document.addEventListener("DOMContentLoaded", function () {
         msgPasswordMatch();
     });
 
-    btnShowHidePass.addEventListener("click" , () => {
-        if(inputPassword.type === 'password'){
+    btnShowHidePass.addEventListener("click", () => {
+        if (inputPassword.type === 'password') {
             inputPassword.type = 'text';
             ImgEye.src = "img/eye-slash.svg";
         } else {
@@ -240,8 +292,8 @@ document.addEventListener("DOMContentLoaded", function () {
         msgPasswordMatch();
     });
 
-    btnShowHidePassMatch.addEventListener("click" , () => {
-        if(inputPasswordConfirm.type === 'password'){
+    btnShowHidePassMatch.addEventListener("click", () => {
+        if (inputPasswordConfirm.type === 'password') {
             inputPasswordConfirm.type = 'text';
             ImgEyeMatch.src = "img/eye-slash.svg";
         } else {
@@ -260,6 +312,23 @@ document.addEventListener("DOMContentLoaded", function () {
     inputDate.addEventListener("change", () => {
         dateOfBirth = inputDate.value;
         validateGenderAndBirth();
+    })
+
+    inputPais.addEventListener("input", () => {
+        pais = inputPais.value;
+        inputCiudad.value = "";
+        datalistCiudad.innerHTML = "";
+        if (pais in paises) {
+            for (let ciudad of paises[pais]["ciudades"]) {
+                optionCiudad = document.createElement("option");
+                optionCiudad.value = ciudad;
+                datalistCiudad.appendChild(optionCiudad);
+            }
+        }
+    })
+
+    inputCiudad.addEventListener("change", () => {
+        ciudad = inputCiudad.value;
     })
 
     formulario.addEventListener("submit", (e) => e.preventDefault());
