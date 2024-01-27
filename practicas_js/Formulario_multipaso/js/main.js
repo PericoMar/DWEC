@@ -3,6 +3,7 @@
     let email, password = "", passwordConfirm = "";
     let gen, dateOfBirth;
     let pais, ciudad , direccion;
+    let amount, convertedAmount;
 
 document.addEventListener("DOMContentLoaded", function () {
     const formulario = document.getElementById("formRegistro");
@@ -93,6 +94,11 @@ document.addEventListener("DOMContentLoaded", function () {
         optionPais.innerHTML = paises[pais]["ingles"];
         datalistPais.appendChild(optionPais);
     }
+
+    // Cambio de divisas
+    const inputAmount = document.getElementById("amount");
+    const selectBaseCurrency = document.getElementById("base-currency");
+    const selectCurrency = document.getElementById("currency");
 
     let pasoActual = 1;
 
@@ -353,6 +359,67 @@ document.addEventListener("DOMContentLoaded", function () {
         direccion = inputAutocomplete.value;
         validateDirection();
     })
+
+    let baseCurrency;
+    let currency;
+
+    const tasasDeCambio = {
+        USD: {
+            EUR: 0.85,
+            GBP: 0.75,
+            JPY: 110.24,
+            AUD: 1.33,
+            CAD: 1.26,
+            // Puedes agregar más tasas de cambio según sea necesario
+        },
+        EUR: {
+            USD: 1.18,
+            GBP: 0.88,
+            JPY: 128.87,
+            AUD: 1.53,
+            CAD: 1.45,
+            // Puedes agregar más tasas de cambio según sea necesario
+        },
+        GBP: {
+            USD: 1.33,
+            EUR: 1.14,
+            JPY: 146.82,
+            AUD: 1.74,
+            CAD: 1.64,
+            // Puedes agregar más tasas de cambio según sea necesario
+        },
+        JPY: {
+            USD: 0.0091,
+            EUR: 0.0078,
+            GBP: 0.0068,
+            AUD: 0.012,
+            CAD: 0.011,
+            // Puedes agregar más tasas de cambio según sea necesario
+        },
+        AUD: {
+            USD: 0.75,
+            EUR: 0.65,
+            GBP: 0.57,
+            JPY: 82.81,
+            CAD: 0.95,
+            // Puedes agregar más tasas de cambio según sea necesario
+        },
+        CAD: {
+            USD: 0.79,
+            EUR: 0.69,
+            GBP: 0.61,
+            JPY: 91.32,
+            AUD: 1.05,
+            // Puedes agregar más tasas de cambio según sea necesario
+        }
+        // Agrega más tasas de cambio según sea necesario
+    };
+
+    selectBaseCurrency.addEventListener("change" , () => {
+        baseCurrency = selectBaseCurrency.value;
+        selectBaseCurrency.options[0].disabled = true;
+    })
+    
 
     formulario.addEventListener("submit", (e) => e.preventDefault());
 
