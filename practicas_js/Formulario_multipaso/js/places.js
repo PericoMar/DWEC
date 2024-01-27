@@ -42,7 +42,6 @@ function onPlaceChanged() {
         document.getElementById('input-autocomplete').placeholder = 'Calle Violeta Parra'
     } else {
         details = place.name;
-        console.log(details);
     }
 }
 

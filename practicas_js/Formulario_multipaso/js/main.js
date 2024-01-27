@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputAmount = document.getElementById("amount");
     const selectBaseCurrency = document.getElementById("base-currency");
     const selectCurrency = document.getElementById("currency");
+    const btnEnd = document.getElementById("btn-end");
 
     let pasoActual = 1;
 
@@ -263,11 +264,34 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function validateExchange() {
+        if(!isNaN(amount) && baseCurrency != '' && currency != ''){
+            btnEnd.disabled = false;
+        } else {
+            btnEnd.disabled = true;
+        }
+    }
+
+    function updateCurrencyOptions(){
+        for (let i = 1; i < selectCurrency.options.length; i++) {
+            selectCurrency.options[i].disabled = false;
+        }
+
+        let selectedBaseCurrency = selectBaseCurrency.value;
+        for (var i = 1; i < selectCurrency.options.length; i++) {
+            if (selectCurrency.options[i].value === selectedBaseCurrency) {
+                selectCurrency.options[i].disabled = true;
+                break;
+            }
+        }
+    }
+
     // Botones desactivados con los campos vacios:
     btnNombre.disabled = true;
     btnInfo.disabled = true;
     btnDetalles.disabled = true;
     btnDireccion.disabled = true;
+    btnEnd.disabled = true;
 
     // Controlamos el evento input para saber lo que pone cada vez que hace un cambio,
     // no pongo change porque en change tiene que perder el foco y lo normal en un formulario
@@ -363,6 +387,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let baseCurrency;
     let currency;
 
+    // Los datos pueden estar desactualizados
+    // Intente usar una API pero al menos la versión gratuita no me funcionó
+
     const tasasDeCambio = {
         USD: {
             EUR: 0.85,
@@ -370,7 +397,6 @@ document.addEventListener("DOMContentLoaded", function () {
             JPY: 110.24,
             AUD: 1.33,
             CAD: 1.26,
-            // Puedes agregar más tasas de cambio según sea necesario
         },
         EUR: {
             USD: 1.18,
@@ -378,7 +404,6 @@ document.addEventListener("DOMContentLoaded", function () {
             JPY: 128.87,
             AUD: 1.53,
             CAD: 1.45,
-            // Puedes agregar más tasas de cambio según sea necesario
         },
         GBP: {
             USD: 1.33,
@@ -386,7 +411,6 @@ document.addEventListener("DOMContentLoaded", function () {
             JPY: 146.82,
             AUD: 1.74,
             CAD: 1.64,
-            // Puedes agregar más tasas de cambio según sea necesario
         },
         JPY: {
             USD: 0.0091,
@@ -394,7 +418,6 @@ document.addEventListener("DOMContentLoaded", function () {
             GBP: 0.0068,
             AUD: 0.012,
             CAD: 0.011,
-            // Puedes agregar más tasas de cambio según sea necesario
         },
         AUD: {
             USD: 0.75,
@@ -402,7 +425,6 @@ document.addEventListener("DOMContentLoaded", function () {
             GBP: 0.57,
             JPY: 82.81,
             CAD: 0.95,
-            // Puedes agregar más tasas de cambio según sea necesario
         },
         CAD: {
             USD: 0.79,
@@ -410,18 +432,55 @@ document.addEventListener("DOMContentLoaded", function () {
             GBP: 0.61,
             JPY: 91.32,
             AUD: 1.05,
-            // Puedes agregar más tasas de cambio según sea necesario
         }
-        // Agrega más tasas de cambio según sea necesario
     };
 
     selectBaseCurrency.addEventListener("change" , () => {
         baseCurrency = selectBaseCurrency.value;
         selectBaseCurrency.options[0].disabled = true;
+        selectCurrency.value = "";
+        validateExchange();
+        updateCurrencyOptions();
+    });
+
+    selectCurrency.addEventListener("change" , () => {
+        currency = selectCurrency.value;
+        selectCurrency.options[0].disabled = true;
+        validateExchange();
+    });
+
+    inputAmount.addEventListener("input" , () => {
+        amount = inputAmount.value;
+        amount = Number(amount);
+        validateExchange();
     })
     
+    const thanksModule = document.getElementById("thanks-module");
 
-    formulario.addEventListener("submit", (e) => e.preventDefault());
+    formulario.addEventListener("submit", (e) => 
+    {
+        e.preventDefault();
+        convertedAmount = amount * tasasDeCambio[baseCurrency][currency];
+        thanksModule.innerHTML = `<article>
+                                    <h2>¡Gracias por tu solicitud, ${nom} ${ape}!</h2>
+                                    <p>Has cambiado ${amount} ${baseCurrency} a ${currency} con éxito. El monto convertido es ${convertedAmount}.</p>
+                                    <p>Te agradecemos por utilizar nuestro servicio.</p>
+                                </article>`;
+        const btnCerrarModal = document.createElement("button");
+        const anchorMail = document.createElement("a");
+        anchorMail.href = `mailto:${email}?subject=Exchange&body=Gracias%20por%20la%20solicitud.%0A%0AHas%20cambiado%20${amount}%20${baseCurrency}%20a%20${currency}%20con%20éxito.%20El%20monto%20convertido%20es%20${convertedAmount}.%0A%0A(Este%20correo%20no%20puede%20ser%20respondido)`;
+        anchorMail.innerHTML = "Enviar la información por correo";
+        btnCerrarModal.innerHTML = "Cerrar";
+        thanksModule.appendChild(btnCerrarModal);
+        thanksModule.appendChild(anchorMail);
+        btnCerrarModal.addEventListener("click" , closeModal);
+        thanksModule.showModal();
+    });
+
+    function closeModal(){
+        thanksModule.close();
+        location.reload();
+    }
 
 
 });

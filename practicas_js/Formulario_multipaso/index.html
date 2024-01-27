@@ -44,7 +44,7 @@
                             </div>
                             <div class="d-flex p-2 justify-content-between">
                                 <button class="btn btn-outline-primary btn-sm btn-anterior disabled">Anterior</button>
-                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-nombre">Siguiente</button>
+                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-nombre" type="button">Siguiente</button>
                             </div>
                         </div>
                         <div class="paso" data-paso="2">
@@ -68,7 +68,7 @@
                                     id="input-password"
                                     placeholder="Contraseña"
                                 />
-                                <button class="btn btn-outline-secondary" id="btn-show-hide-pass">
+                                <button class="btn btn-outline-secondary" id="btn-show-hide-pass" type="button">
                                     <img src="img/eye.svg" alt="Show password" id="eye-img">
                                 </button>
                             </div>
@@ -84,14 +84,14 @@
                                     id="input-password2"
                                     placeholder="Confirmar Contraseña"
                                 />
-                                <button class="btn btn-outline-secondary" id="btn-show-hide-pass-match">
+                                <button class="btn btn-outline-secondary" id="btn-show-hide-pass-match" type="button">
                                     <img src="img/eye.svg" alt="Show password" id="eye-img-match">
                                 </button>
                             </div>
                             <div class="pass-match" id="msg-passwd-match" style="display:none;"><small class="text-muted">Las contraseñas no coinciden.</small></div>
                             <div class="d-flex p-2 justify-content-between">
                                 <button class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
-                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-info">Siguiente</button>
+                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-info" type="button">Siguiente</button>
                             </div>
                         </div>
                         <div class="paso" data-paso="3">
@@ -116,7 +116,7 @@
                             <div id="msg-date" style="display:none;"><small class="text-muted">Debes ser mayor de edad.</small></div>
                             <div class="d-flex p-2 justify-content-between">
                                 <button class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
-                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-details">Siguiente</button>
+                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-details" type="button">Siguiente</button>
                             </div>
                         </div>
                         <div class="paso" data-paso="4">
@@ -159,7 +159,7 @@
                             </div>
                             <div class="d-flex p-2 justify-content-between">
                                 <button class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
-                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-dir">Siguiente</button>
+                                <button class="btn btn-outline-primary btn-sm btn-siguiente" id="btn-dir" type="button">Siguiente</button>
                             </div>
                         </div>
                         <div class="paso" data-paso="5">
@@ -203,6 +203,9 @@
                 </div>
             </div>
         </div>
+        <dialog id="thanks-module">
+
+        </dialog>
         <script type="module" src="js/places.js"></script>
         <script type="module" src="js/main.js"></script>
     </body>
