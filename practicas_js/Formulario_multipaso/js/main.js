@@ -1,3 +1,9 @@
+//Variables para comprobar si es correcto cada vez que haga un cambio en los campos:
+    let nom, ape = " ";
+    let email, password = "", passwordConfirm = "";
+    let gen, dateOfBirth;
+    let pais, ciudad , direccion;
+
 document.addEventListener("DOMContentLoaded", function () {
     const formulario = document.getElementById("formRegistro");
     const pasos = document.querySelectorAll(".paso");
@@ -72,13 +78,17 @@ document.addEventListener("DOMContentLoaded", function () {
             "ciudades": ["Atenas", "Salónica", "El Pireo", "Patras", "Larisa", "Heraklion", "Volos", "Ioánina", "Kavala", "Komotini", "Rodas", "Chania", "Chalcis", "Lamia", "Alexandroupoli"]
         }
     }
+
     const datalistPais = document.getElementById("paises");
     const inputPais = document.getElementById("input-pais");
     const datalistCiudad = document.getElementById("ciudades");
     const inputCiudad = document.getElementById("input-ciudad");
+    const inputAutocomplete = document.getElementById("input-autocomplete");
+    const btnDireccion = document.getElementById("btn-dir");
+    const REGEX_DIRECCION = /[a-zA-Z0-9\s,'-]+/;
 
     for (let pais in paises) {
-        optionPais = document.createElement("option");
+        let optionPais = document.createElement("option");
         optionPais.value = pais;
         optionPais.innerHTML = paises[pais]["ingles"];
         datalistPais.appendChild(optionPais);
@@ -122,11 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    //Variables para comprobar si es correcto cada vez que haga un cambio en los campos:
-    let nom, ape = " ";
-    let email, password = "", passwordConfirm = "";
-    let gen, dateOfBirth;
-    let pais, ciudad;
+    
 
     function validateNomApe() {
         if (REGEX_NOMBRE.test(nom) && REGEX_NOMBRE.test(ape)) {
@@ -243,10 +249,19 @@ document.addEventListener("DOMContentLoaded", function () {
         return date.getFullYear() - dateOfBirthObj.getFullYear() < 120;
     }
 
+    function validateDirection() {
+        if(pais in paises && paises[pais]["ciudades"].includes(ciudad) && REGEX_DIRECCION.test(direccion)){
+            btnDireccion.disabled = false;
+        } else {
+            btnDireccion.disabled = true;
+        }
+    }
+
     // Botones desactivados con los campos vacios:
     btnNombre.disabled = true;
     btnInfo.disabled = true;
     btnDetalles.disabled = true;
+    btnDireccion.disabled = true;
 
     // Controlamos el evento input para saber lo que pone cada vez que hace un cambio,
     // no pongo change porque en change tiene que perder el foco y lo normal en un formulario
@@ -319,16 +334,24 @@ document.addEventListener("DOMContentLoaded", function () {
         inputCiudad.value = "";
         datalistCiudad.innerHTML = "";
         if (pais in paises) {
+            inputAutocomplete.disabled = false;
             for (let ciudad of paises[pais]["ciudades"]) {
-                optionCiudad = document.createElement("option");
+                let optionCiudad = document.createElement("option");
                 optionCiudad.value = ciudad;
                 datalistCiudad.appendChild(optionCiudad);
             }
         }
+        validateDirection();
     })
 
     inputCiudad.addEventListener("change", () => {
         ciudad = inputCiudad.value;
+        validateDirection();
+    })
+
+    inputAutocomplete.addEventListener("input" , () => {
+        direccion = inputAutocomplete.value;
+        validateDirection();
     })
 
     formulario.addEventListener("submit", (e) => e.preventDefault());

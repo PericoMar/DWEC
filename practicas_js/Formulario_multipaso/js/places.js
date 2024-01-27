@@ -17,6 +17,10 @@ body.appendChild(script);
 let autocomplete;
 let details;
 
+// Intenté que el autocomplete fuese dependiendo de el pais esocogido (con componentRestrictions)
+// pero no podia porque el autcomplete se inicializa nada mas cargar la web.
+// Se podria hacer facilmente en otro tipo de formulario
+
 window.initAutocomplete = function() {
     autocomplete = new google.maps.places.Autocomplete(
         document.getElementById("input-autocomplete"),
@@ -27,6 +31,8 @@ window.initAutocomplete = function() {
     
         autocomplete.addListener('place_changed' , onPlaceChanged);
 };
+
+
 
 
 function onPlaceChanged() {
