@@ -1,6 +1,6 @@
 //Variables para comprobar si es correcto cada vez que haga un cambio en los campos:
     let nom, ape = " ";
-    let email, password = "", passwordConfirm = "";
+    let email, password = "", passwordConfirm = "" ,tel;
     let gen, dateOfBirth;
     let pais, ciudad , direccion;
     let amount, convertedAmount;
@@ -21,6 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputEmail = document.getElementById("input-email");
     const inputPassword = document.getElementById("input-password");
     const inputPasswordConfirm = document.getElementById("input-password2");
+    const inputTel = document.getElementById("input-tel");
+    const msgTel = document.getElementById("msg-tel");
+    const REGEX_TEL = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     const msgPasswd = document.getElementById("msg-passwd");
     const msgPasswdMatch = document.getElementById("msg-passwd-match");
     const msgTextEmail = document.getElementById("msg-email");
@@ -153,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let strength = calculatePasswordStrength(password);
         updateStrengthMeter(strength);
 
-        if (REGEX_EMAIL.test(email) && password === passwordConfirm && password.length >= MIN_PASSWD_LENGTH) {
+        if (REGEX_EMAIL.test(email) && password === passwordConfirm && password.length >= MIN_PASSWD_LENGTH && REGEX_TEL.test(tel)) {
             btnInfo.disabled = false;
         } else {
             btnInfo.disabled = true;
@@ -181,6 +184,14 @@ document.addEventListener("DOMContentLoaded", function () {
             msgTextEmail.style.display = 'none';
         } else {
             msgTextEmail.style.display = 'block';
+        }
+    }
+
+    function msgPhone() {
+        if (REGEX_TEL.test(tel)) {
+            msgTel.style.display = 'none';
+        } else {
+            msgTel.style.display = 'block';
         }
     }
 
@@ -347,6 +358,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    inputTel.addEventListener("input" , () => {
+        tel = inputTel.value;
+        msgPhone();
+        validateAccountInfo();
+    })
+
     selectGenero.addEventListener("change", () => {
         gen = selectGenero.value;
         //Desabilito la opcion de "Seleccione genero..."
@@ -388,7 +405,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let currency;
 
     // Los datos pueden estar desactualizados
-    // Intente usar una API pero al menos la versión gratuita no me funcionó
+    // Intenté usar una API pero al menos la versión gratuita no me funcionó
 
     const tasasDeCambio = {
         USD: {
