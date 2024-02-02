@@ -1,6 +1,6 @@
 import { API_KEY } from "./api.js";
 
-// Obtén el elemento head
+// Obtén el elemento body
 var body = document.body || document.getElementsByTagName('body')[0];
 
 // Crea un nuevo elemento script
@@ -11,7 +11,7 @@ script.async = true;
 script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initAutocomplete`;
 
 
-// Agrega el script al head
+// Agrega el script al body
 body.appendChild(script);
 
 let autocomplete;

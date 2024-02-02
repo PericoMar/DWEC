@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
     //Control del formulario:
     const inputNombre = document.getElementById("input-nom");
     const inputApe = document.getElementById("input-ape");
+    const msgNom = document.getElementById("msg-nom");
+    const msgApe = document.getElementById("msg-ape");
     const btnNombre = document.getElementById("btn-nombre");
     const REGEX_NOMBRE = /^([A-ZÁÉÍÓÚÑa-zñáéíóúñ]{1,}'?-?[A-ZÁÉÍÓÚÑa-zñáéíóú]*[\s]*[A-ZÁÉÍÓÚÑa-zñáéíóúñ]{1,})+$/;
 
@@ -26,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const REGEX_TEL = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     const msgPasswd = document.getElementById("msg-passwd");
     const msgPasswdMatch = document.getElementById("msg-passwd-match");
-    const msgTextEmail = document.getElementById("msg-email");
+    const msgEmail = document.getElementById("msg-email");
     const MIN_PASSWD_LENGTH = 8;
     //Gestion de la barra de fuerza de la contraseña
     const strengthBar = document.getElementById('strength-bar');
@@ -142,16 +144,38 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    
-
     function validateNomApe() {
         if (REGEX_NOMBRE.test(nom) && REGEX_NOMBRE.test(ape)) {
             btnNombre.disabled = false;
+            
         } else {
             btnNombre.disabled = true;
+            
         }
     }
 
+    function updateMessageState(msg, inputField, isValid) {
+        if (isValid) {
+            msg.style.display = 'none';
+            inputField.classList.remove('is-invalid');
+            inputField.classList.add('is-valid');
+        } else {
+            msg.style.display = 'block';
+            inputField.classList.remove('is-valid');
+            inputField.classList.add('is-invalid');
+        }
+    }
+
+    function updateInputState(inputField, isValid) {
+        if (isValid) {
+            inputField.classList.remove('is-invalid');
+            inputField.classList.add('is-valid');
+        } else {
+            inputField.classList.remove('is-valid');
+            inputField.classList.add('is-invalid');
+        }
+    }
+    
     function validateAccountInfo() {
         let strength = calculatePasswordStrength(password);
         updateStrengthMeter(strength);
@@ -163,37 +187,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function msgPassword() {
-        if (password.length >= MIN_PASSWD_LENGTH) {
-            msgPasswd.style.display = 'none';
-        } else {
-            msgPasswd.style.display = 'block';
-        }
-    }
-
-    function msgPasswordMatch() {
-        if (password === passwordConfirm) {
-            msgPasswdMatch.style.display = 'none';
-        } else {
-            msgPasswdMatch.style.display = 'block';
-        }
-    }
-
-    function msgEmail() {
-        if (REGEX_EMAIL.test(email)) {
-            msgTextEmail.style.display = 'none';
-        } else {
-            msgTextEmail.style.display = 'block';
-        }
-    }
-
-    function msgPhone() {
-        if (REGEX_TEL.test(tel)) {
-            msgTel.style.display = 'none';
-        } else {
-            msgTel.style.display = 'block';
-        }
-    }
 
     //En este caso voy a hacer una función sencilla pero se podrian añadir más controles:
     function calculatePasswordStrength(password) {
@@ -312,24 +305,26 @@ document.addEventListener("DOMContentLoaded", function () {
     inputNombre.addEventListener("input", () => {
         nom = inputNombre.value;
         validateNomApe();
+        updateMessageState(msgNom, inputNombre , REGEX_NOMBRE.test(nom));
     });
 
     inputApe.addEventListener("input", () => {
         ape = inputApe.value;
         validateNomApe();
+        updateMessageState(msgApe, inputApe , REGEX_NOMBRE.test(ape));
     });
 
     inputEmail.addEventListener("input", () => {
         email = inputEmail.value;
         validateAccountInfo();
-        msgEmail();
+        updateMessageState(msgEmail, inputEmail , REGEX_EMAIL.test(email));
     });
 
     inputPassword.addEventListener("input", () => {
         password = inputPassword.value;
         validateAccountInfo();
-        msgPassword();
-        msgPasswordMatch();
+        updateMessageState(msgPasswd , inputPassword , password.length >= MIN_PASSWD_LENGTH);
+        
     });
 
     btnShowHidePass.addEventListener("click", () => {
@@ -345,7 +340,7 @@ document.addEventListener("DOMContentLoaded", function () {
     inputPasswordConfirm.addEventListener("input", () => {
         passwordConfirm = inputPasswordConfirm.value;
         validateAccountInfo();
-        msgPasswordMatch();
+        updateMessageState(msgPasswdMatch , inputPasswordConfirm , password === passwordConfirm);
     });
 
     btnShowHidePassMatch.addEventListener("click", () => {
@@ -360,8 +355,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     inputTel.addEventListener("input" , () => {
         tel = inputTel.value;
-        msgPhone();
         validateAccountInfo();
+        updateMessageState(msgTel , inputTel , REGEX_TEL.test(tel));
     })
 
     selectGenero.addEventListener("change", () => {
@@ -369,11 +364,13 @@ document.addEventListener("DOMContentLoaded", function () {
         //Desabilito la opcion de "Seleccione genero..."
         selectGenero.options[0].disabled = true;
         validateGenderAndBirth();
+        updateInputState(selectGenero , gen);
     });
 
     inputDate.addEventListener("change", () => {
         dateOfBirth = inputDate.value;
         validateGenderAndBirth();
+        updateInputState(inputDate , isAdult() && dateIsCorrect())
     })
 
     inputPais.addEventListener("input", () => {
