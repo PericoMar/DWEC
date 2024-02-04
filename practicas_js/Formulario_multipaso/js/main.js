@@ -1,13 +1,12 @@
-import { API_KEY } from "./api.js";
+import { API_KEY_PLACES, API_KEY_CURRENCY } from "./api.js";
 
 //Variables para comprobar si es correcto cada vez que haga un cambio en los campos:
 let nom, ape = " ";
 let email, password = "", passwordConfirm = "", tel;
 let gen, dateOfBirth;
-let direccion;
+let pais, direccion;
 let amount, convertedAmount;
-
-
+let baseCurrency = "USD", currency;
 
 
 const formulario = document.getElementById("formRegistro");
@@ -46,10 +45,11 @@ const ImgEyeMatch = document.getElementById("eye-img-match");
 // Datos adicionales
 const selectGenero = document.getElementById("select-gen");
 const inputDate = document.getElementById("input-fecha");
-const msgDate = document.getElementById("msg-date");
+const msgAdult = document.getElementById("msg-adult");
+const msgDateCorrect = document.getElementById("msg-date-correct")
 const btnDetalles = document.getElementById("btn-details");
 
-export const paises = {
+const paises = {
     "España": {
         "iso": "ES",
         "ingles": "Spain"
@@ -89,7 +89,7 @@ export const paises = {
 }
 
 
-
+const inputPais = document.getElementById("input-pais");
 const datalistPais = document.getElementById("paises");
 const inputAutocomplete = document.getElementById("input-autocomplete");
 const btnDireccion = document.getElementById("btn-dir");
@@ -107,6 +107,22 @@ const inputAmount = document.getElementById("amount");
 const selectBaseCurrency = document.getElementById("base-currency");
 const selectCurrency = document.getElementById("currency");
 const btnEnd = document.getElementById("btn-end");
+
+var arrayMonedas = ["USD", "EUR", "JPY", "GBP", "AUD", "CAD", "CHF", "CNY", "SEK", "NZD", "NOK", "SGD", "KRW", "MXN", "INR"];
+
+
+arrayMonedas.forEach(moneda => {
+    const optionBaseCurrency = document.createElement("option");
+    optionBaseCurrency.innerHTML = moneda;
+    optionBaseCurrency.value = moneda;
+    selectBaseCurrency.appendChild(optionBaseCurrency);
+
+    const optionCurrency = document.createElement("option");
+    optionCurrency.innerHTML = moneda;
+    optionCurrency.value = moneda;
+    selectCurrency.appendChild(optionCurrency);
+});
+
 
 let pasoActual = 1;
 
@@ -227,11 +243,6 @@ function updateStrengthMeter(strength) {
 }
 
 function validateGenderAndBirth() {
-    if (isAdult()) {
-        msgDate.style.display = 'none';
-    } else {
-        msgDate.style.display = 'block';
-    }
 
     if (gen && isAdult() && dateIsCorrect()) {
         btnDetalles.disabled = false;
@@ -326,7 +337,7 @@ inputPassword.addEventListener("input", () => {
     password = inputPassword.value;
     validateAccountInfo();
     updateMessageState(msgPasswd, inputPassword, password.length >= MIN_PASSWD_LENGTH);
-    if(passwordConfirm){
+    if (passwordConfirm) {
         updateMessageState(msgPasswdMatch, inputPasswordConfirm, password === passwordConfirm);
     }
 });
@@ -374,8 +385,66 @@ selectGenero.addEventListener("change", () => {
 inputDate.addEventListener("change", () => {
     dateOfBirth = inputDate.value;
     validateGenderAndBirth();
-    updateInputState(inputDate, isAdult() && dateIsCorrect());
+    updateMessageState(msgAdult, inputDate, isAdult());
+    updateMessageState(msgDateCorrect , inputDate , dateIsCorrect());
 })
+
+let scriptElement;  // Variable para almacenar el elemento script
+
+inputPais.addEventListener("input", () => {
+    inputAutocomplete.value = "";
+    pais = inputPais.value;
+    if (pais in paises) {
+        inputAutocomplete.disabled = false;
+
+        // Elimina el script anterior si existe
+        if (scriptElement) {
+            document.body.removeChild(scriptElement);
+        }
+
+        // Obtén el elemento body
+        var body = document.body || document.getElementsByTagName('body')[0];
+
+        // Crea un nuevo elemento script
+        scriptElement = document.createElement('script');
+
+        // Asigna la fuente del script con la clave API
+        scriptElement.async = true;
+        scriptElement.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY_PLACES}&libraries=places&callback=initAutocomplete`;
+
+        // Agrega el nuevo script al body
+        body.appendChild(scriptElement);
+
+        let autocomplete;
+        let details;
+
+        window.initAutocomplete = function () {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById("input-autocomplete"),
+                {
+                    types: ['address'],
+                    componentRestrictions: { country: paises[pais].iso },
+                    fields: ['formatted_address']
+                });
+
+            autocomplete.addListener('place_changed', onPlaceChanged);
+        };
+
+        function onPlaceChanged() {
+            let place = autocomplete.getPlace();
+
+            if (!place.geometry) {
+                inputAutocomplete.placeholder = 'Calle Violeta Parra';
+            } else {
+                details = place.name;
+            }
+        }
+    }
+
+    updateInputState(inputPais, pais in paises);
+    validateDirection();
+})
+
 
 
 inputAutocomplete.addEventListener("input", () => {
@@ -383,57 +452,6 @@ inputAutocomplete.addEventListener("input", () => {
     validateDirection();
     updateInputState(inputAutocomplete, REGEX_DIRECCION.test(direccion));
 })
-
-let baseCurrency;
-let currency;
-
-// Los datos pueden estar desactualizados
-// Intenté usar una API pero al menos la versión gratuita no me funcionó
-
-const tasasDeCambio = {
-    USD: {
-        EUR: 0.85,
-        GBP: 0.75,
-        JPY: 110.24,
-        AUD: 1.33,
-        CAD: 1.26,
-    },
-    EUR: {
-        USD: 1.18,
-        GBP: 0.88,
-        JPY: 128.87,
-        AUD: 1.53,
-        CAD: 1.45,
-    },
-    GBP: {
-        USD: 1.33,
-        EUR: 1.14,
-        JPY: 146.82,
-        AUD: 1.74,
-        CAD: 1.64,
-    },
-    JPY: {
-        USD: 0.0091,
-        EUR: 0.0078,
-        GBP: 0.0068,
-        AUD: 0.012,
-        CAD: 0.011,
-    },
-    AUD: {
-        USD: 0.75,
-        EUR: 0.65,
-        GBP: 0.57,
-        JPY: 82.81,
-        CAD: 0.95,
-    },
-    CAD: {
-        USD: 0.79,
-        EUR: 0.69,
-        GBP: 0.61,
-        JPY: 91.32,
-        AUD: 1.05,
-    }
-};
 
 inputAmount.addEventListener("input", () => {
     amount = inputAmount.value;
@@ -462,23 +480,31 @@ selectCurrency.addEventListener("change", () => {
 
 const thanksModule = document.getElementById("thanks-module");
 
+
+
 formulario.addEventListener("submit", (e) => {
     e.preventDefault();
-    convertedAmount = amount * tasasDeCambio[baseCurrency][currency];
-    thanksModule.innerHTML = `<article>
+    fetch(`https://v6.exchangerate-api.com/v6/${API_KEY_CURRENCY}/latest/${baseCurrency}`)
+    .then(response => response.json())
+    .then(result => {
+        convertedAmount = result.conversion_rates[currency] * amount;
+        thanksModule.innerHTML = `<article>
                                     <h2>¡Gracias por tu solicitud, ${nom} ${ape}!</h2>
                                     <p>Has cambiado ${amount} ${baseCurrency} a ${currency} con éxito. El monto convertido es ${convertedAmount}.</p>
                                     <p>Te agradecemos por utilizar nuestro servicio.</p>
                                 </article>`;
-    const btnCerrarModal = document.createElement("button");
-    const anchorMail = document.createElement("a");
-    anchorMail.href = `mailto:${email}?subject=Exchange&body=Gracias%20por%20la%20solicitud.%0A%0AHas%20cambiado%20${amount}%20${baseCurrency}%20a%20${currency}%20con%20éxito.%20El%20monto%20convertido%20es%20${convertedAmount}.%0A%0A(Este%20correo%20no%20puede%20ser%20respondido)`;
-    anchorMail.innerHTML = "Enviar la información por correo";
-    btnCerrarModal.innerHTML = "Cerrar";
-    thanksModule.appendChild(btnCerrarModal);
-    thanksModule.appendChild(anchorMail);
-    btnCerrarModal.addEventListener("click", closeModal);
-    thanksModule.showModal();
+        const btnCerrarModal = document.createElement("button");
+        const anchorMail = document.createElement("a");
+        anchorMail.href = `mailto:${email}?subject=Exchange&body=Gracias%20por%20la%20solicitud.%0A%0AHas%20cambiado%20${amount}%20${baseCurrency}%20a%20${currency}%20con%20éxito.%20El%20monto%20convertido%20es%20${convertedAmount}.%0A%0A(Este%20correo%20no%20puede%20ser%20respondido)`;
+        anchorMail.innerHTML = "Enviar la información por correo";
+        btnCerrarModal.innerHTML = "Cerrar";
+        btnCerrarModal.classList.add("button-cerrar-modal")
+        thanksModule.appendChild(btnCerrarModal);
+        thanksModule.appendChild(anchorMail);
+        btnCerrarModal.addEventListener("click", closeModal);
+        thanksModule.showModal();
+    });
+
 });
 
 function closeModal() {
