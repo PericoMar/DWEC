@@ -8,7 +8,6 @@ let pais, direccion;
 let amount, convertedAmount;
 let baseCurrency = "USD", currency;
 
-
 const formulario = document.getElementById("formRegistro");
 const pasos = document.querySelectorAll(".paso");
 const btnsSiguiente = document.querySelectorAll(".btn-siguiente");
@@ -252,19 +251,23 @@ function validateGenderAndBirth() {
 }
 
 function isAdult() {
-    const dateOfBirthObj = new Date(dateOfBirth);
-    const date = new Date();
-    let diferenciaAnios = date.getFullYear() - dateOfBirthObj.getFullYear();
+    if(dateOfBirth && dateOfBirth.length === 10){
+        const dateOfBirthObj = new Date(dateOfBirth);
+        const date = new Date();
+        let diferenciaAnios = date.getFullYear() - dateOfBirthObj.getFullYear();
 
-    // Ajusta la diferencia si la fecha de nacimiento no ha ocurrido todavía este año
-    if (
-        date.getMonth() < dateOfBirthObj.getMonth() ||
-        (date.getMonth() === dateOfBirthObj.getMonth() && date.getDate() < dateOfBirthObj.getDate())
-    ) {
-        diferenciaAnios--;
+        // Ajusta la diferencia si la fecha de nacimiento no ha ocurrido todavía este año
+        if (
+            date.getMonth() < dateOfBirthObj.getMonth() ||
+            (date.getMonth() === dateOfBirthObj.getMonth() && date.getDate() < dateOfBirthObj.getDate())
+        ) {
+            diferenciaAnios--;
+        }
+
+        return diferenciaAnios >= 18;
+    } else {
+        return false;
     }
-
-    return diferenciaAnios > 18;
 }
 
 function dateIsCorrect() {
@@ -387,6 +390,7 @@ inputDate.addEventListener("change", () => {
     validateGenderAndBirth();
     updateMessageState(msgAdult, inputDate, isAdult());
     updateMessageState(msgDateCorrect , inputDate , dateIsCorrect());
+    updateInputState(inputDate, isAdult() && dateIsCorrect());
 })
 
 let scriptElement;  // Variable para almacenar el elemento script
