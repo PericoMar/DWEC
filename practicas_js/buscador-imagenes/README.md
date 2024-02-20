@@ -1,33 +1,42 @@
-## Buscador de imágenes
+# Buscador de Imágenes
 
-Se trata de desarrollar un ejemplo de buscador de imágenes en el servicio Unsplash. Tendrás que registrarte como desarrollador/a y leer la documentación que tienes aquí: https://unsplash.com/documentation
+Este proyecto consiste en un ejemplo de un buscador de imágenes utilizando el servicio Unsplash. Para desarrollar la aplicación, se registró como desarrollador/a en Unsplash y se utilizó la documentación proporcionada [aquí](https://unsplash.com/documentation).
 
-### Indicaciones
+## Desarrollo de la Aplicación
 
-- La aplicación tiene la estructura habitual de una aplicación Vanilla JS. Puedes descargarte los archivos necesarios (HTML y CSS) aquí:
+La aplicación sigue la estructura típica de una aplicación Vanilla JavaScript. Se utilizaron los archivos HTML y CSS proporcionados para el desarrollo.
 
-#### Desarrollo de la app JS
+### Funcionalidades Principales
 
-Más o menos tendrás que seguir estos pasos:
+El desarrollo de la aplicación se dividió en los siguientes pasos:
 
-- Definir los enlaces principales con el DOM
-- Encierra el loop principal de la aplicación en un bloque `windows.onload`, como ya has hecho en otras ocasiones
-- El loop principal es sencillo:
-  - Leer el formulario de búsqueda
-  - Gestionar el evento Submit
-  - Gestionar el paso de la paginación
+1. **Definición de Enlaces Principales con el DOM:** Se establecieron enlaces con elementos HTML clave como el formulario de búsqueda, el contenedor de imágenes y los elementos de paginación.
 
-#### Funciones auxiliares
+2. **Manejo del Evento Submit del Formulario:** Se implementó un event listener para el evento submit del formulario de búsqueda. Cuando el usuario envía el formulario, se realiza una búsqueda de imágenes utilizando la API de Unsplash.
 
-El script necesita de algunas funciones auxiliares:
+3. **Manejo de la Paginación:** Se implementó una función para gestionar la paginación de los resultados de búsqueda. Cuando el usuario hace clic en los botones de paginación, se cargan las imágenes correspondientes a la página seleccionada.
 
-- Una función que valide el formulario (No puede mandarse un texto vacío)
-- Una función que gestione la alerta cuando no se valide el formulario
-- Una función que busca las imágenes usando la API
-  - En la API usar los patrones `fetch` o `Async/await`
-  - Estudia bien la documentación de la API para ver como tienes que hacer la petición
-  - Revisar las propiedades del objeto JSON para ver con cuáles tenemos que quedarnos: Principalmente el enlace a la imagen, autor, o número de visualizaciones
-  - El resultado de esta función tendrá que ser llamar a la función que muestra las imágenes
-- Una función que muestre las imágenes. Cada imagen debe mostrar el autor y el número de visualizaciones al menos
-- Una función que gestione la paginación
+### Funciones Auxiliares
+
+El script principal de la aplicación utiliza varias funciones auxiliares:
+
+- **Función de Validación del Formulario:** Se implementó una función para validar que el formulario no se envíe con un campo de búsqueda vacío.
+  
+- **Función de Alerta de Validación del Formulario:** Se creó una función para mostrar una alerta cuando el formulario no se valida correctamente.
+
+- **Función de Búsqueda de Imágenes:** Se desarrolló una función para realizar una solicitud a la API de Unsplash utilizando el método `fetch` o `Async/await`. Se consultó la documentación de la API para comprender cómo realizar la solicitud y se procesaron los resultados para mostrar las imágenes en la interfaz de usuario.
+
+- **Función para Mostrar las Imágenes:** Se creó una función para renderizar las imágenes recuperadas de la API en la interfaz de usuario. Cada imagen se muestra con información relevante, como el autor y el número de visualizaciones.
+
+- **Función de Gestión de la Paginación:** Se implementó una función para gestionar la paginación de los resultados de búsqueda. Esta función permite al usuario navegar entre las diferentes páginas de resultados.
+
+## Tecnologías Utilizadas
+
+- **JavaScript (Vanilla):** Se utilizó JavaScript puro para el desarrollo de la lógica de la aplicación.
+  
+- **HTML y CSS:** Se emplearon HTML y CSS para la estructura y el estilo de la interfaz de usuario.
+
+- **Unsplash API:** Se utilizó la API de Unsplash para realizar búsquedas de imágenes y obtener información sobre las mismas.
+
+Este proyecto proporciona una experiencia de búsqueda de imágenes interactiva y fácil de usar para los usuarios, permitiéndoles encontrar y explorar una amplia variedad de imágenes disponibles en Unsplash.
 
