@@ -44,6 +44,6 @@ El formulario se divide en varios pasos, cada uno con un conjunto específico de
 - HTML, CSS y JavaScript para la estructura, estilo y funcionalidad del formulario.
 - API Places de Google Maps para autocompletar la dirección y proporcionar sugerencias de ubicación.
 - Otras API para calcular el cambio de divisas.
-- Bootstrap o alguna librería de CSS para el diseño y la responsividad del formulario.
+- Bootstrap para el diseño y la responsividad del formulario.
 
 Al completar todos los pasos del formulario, se muestra un modal de agradecimiento con un mensaje personalizado y la información del cambio de divisas. Esta aplicación proporciona una experiencia interactiva y completa para la recopilación de datos del usuario.
